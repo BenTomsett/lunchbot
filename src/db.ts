@@ -1,4 +1,8 @@
 import Keyv from 'keyv';
 
-export const installations = new Keyv('mongodb://localhost:27017/lunchbot', { collection: 'installations' });
-export const userTokens = new Keyv('mongodb://localhost:27017/lunchbot', { collection: 'userTokens' });
+const { MONGO_HOST, MONGO_USER, MONGO_PASS } = process.env;
+
+const uri = `mongodb://${MONGO_USER}:${MONGO_PASS}@${MONGO_HOST}:27017/lunchbot`;
+
+export const installations = new Keyv(uri, { collection: 'installations' });
+export const userTokens = new Keyv(uri, { collection: 'userTokens' });

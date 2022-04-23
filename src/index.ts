@@ -1,4 +1,3 @@
-import Keyv from 'keyv';
 import app from './app';
 
 if (!process.env.SLACK_APP_TOKEN) {
@@ -13,10 +12,9 @@ if (!process.env.SLACK_CLIENT_SECRET) {
   throw new Error('Lunchbox needs a valid Slack client secret in order to start.');
 }
 
-export const installations = new Keyv('mongodb://localhost:27017/lunchbot');
-installations.on('error', (err) => {
-  console.error(err);
-});
+if (!process.env.MONGO_HOST || !process.env.MONGO_USER || !process.env.MONGO_PASS) {
+  throw new Error('Lunchbox needs valid MongoDB connection information in order to start.');
+}
 
 (async () => {
   await app.start(3000);

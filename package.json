@@ -5,8 +5,9 @@
   "license": "MIT",
   "main": "dist/index.js",
   "scripts": {
-    "start": "tsc && node ./dist/index.js",
-    "lint": "eslint . --ext .ts"
+    "lint": "eslint . --ext .ts",
+    "start": "node .",
+    "build": "tsc"
   },
   "engines": {
     "node": "16.13.0"

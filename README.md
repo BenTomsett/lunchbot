@@ -46,12 +46,13 @@ The app isn't yet available on the Slack App Directory - so you'll need to self-
          - channels:read
          - users.profile:write
          - users.profile:read
-2) In the root of the project, fill in the blank variables in .env.
+2) Either set these environment variables up in your hosting platform of choice, or fill in them in the .env file in the root of the project.
     ```dotenv
     SLACK_APP_URL=<the HTTPS URL of the hosted app (don't include a / a the end)>
     SLACK_APP_TOKEN=<the app-level token you copied down earlier>
     SLACK_CLIENT_ID=<find this under Basic Information > App Credentials>
     SLACK_CLIENT_SECRET=<find this under Basic Information > App Credentials>
+    MONGO_CONN_STRING=<connection information for the MongoDB database, include username and password, see https://www.mongodb.com/docs/manual/reference/connection-string/#std-label-connections-dns-seedlist>
     ```
 3) With the app running, visit the install URL for the app, like so
    ```
@@ -97,6 +98,7 @@ Shows who's currently set as on lunch or away.
 ## Roadmap - updated 23/04/2022
 - [ ] Better error handling
 - [ ] Better logging setup
+- [ ] Create app manifest for easier setup
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 

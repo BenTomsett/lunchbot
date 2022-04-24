@@ -1,7 +1,7 @@
-import { App, SocketModeReceiver } from '@slack/bolt';
+import {App, Installation, SocketModeReceiver} from '@slack/bolt';
 
-import { scopes, userScopes } from './misc/scopes';
-import { installations, userTokens } from './db';
+import {scopes, userScopes} from './misc/scopes';
+import {installations, userTokens} from './db';
 import registerCommands from './commands';
 
 export const receiver: SocketModeReceiver = new SocketModeReceiver({
@@ -24,18 +24,24 @@ export const receiver: SocketModeReceiver = new SocketModeReceiver({
       }
       if (installation.user && installation.user.token) {
         await userTokens.insertOne(
-          { userId: installation.user.id, token: installation.user.token },
+            {userId: installation.user.id, token: installation.user.token},
         );
       }
     },
     fetchInstallation: async (query) => {
+      let install;
       if (query.isEnterpriseInstall && query.enterpriseId !== undefined) {
-        await installations.findOne({ 'enterprise.id': query.enterpriseId });
+        install = (await installations.findOne(
+            {'enterprise.id': query.enterpriseId})) as unknown as Installation;
+      } else {
+        install = (await installations.findOne(
+            {'team.id': query.teamId})) as unknown as Installation;
       }
-      if (query.teamId !== undefined) {
-        await installations.findOne({ 'team.id': query.teamId });
+      if(install){
+        return install;
+      }else{
+        throw new Error('Failed fetching installation');
       }
-      throw new Error('Failed fetching installation');
     },
   },
 });

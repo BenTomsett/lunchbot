@@ -7,6 +7,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import app, {receiver} from './app';
 import { dbClient } from './db';
+import {scopes, userScopes} from './misc/scopes';
 
 if (!process.env.SLACK_APP_TOKEN) {
   throw new Error('Lunchbox needs a valid app-level token in order to start.');
@@ -42,7 +43,11 @@ const port = process.env.PORT || 3000;
 const server = express();
 server.use(bodyParser.urlencoded({extended: false}));
 server.get('/slack/install', (req, res) => {
-  receiver.installer!.handleInstallPath(req, res);
+  receiver.installer!.handleInstallPath(req, res, {}, {
+    scopes,
+    userScopes,
+    redirectUri: `${process.env.SLACK_APP_URL}/slack/oauth_redirect`
+  });
 })
 server.get('/slack/oauth_redirect', (req, res) => {
   receiver.installer!.handleCallback(req, res);

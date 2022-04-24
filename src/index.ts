@@ -30,8 +30,8 @@ if (!process.env.MONGO_CONN_STRING) {
     console.error('Error connecting to MongoDB database:');
     console.error(e);
   }
-
-  await app.start(3000);
-  console.log('🍔 Lunchbot is running and ready to munch');
+  const port = process.env.PORT || 3000
+  await app.start(process.env.PORT || 3000);
+  console.log(`🍔 Lunchbot is running and ready to munch on port ${port}`);
   console.log(`Install URL: ${process.env.SLACK_APP_URL}/slack/install`);
 })();

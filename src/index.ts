@@ -3,7 +3,9 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-import app from './app';
+import express from 'express';
+import bodyParser from 'body-parser';
+import app, {receiver} from './app';
 import { dbClient } from './db';
 
 if (!process.env.SLACK_APP_TOKEN) {
@@ -22,6 +24,7 @@ if (!process.env.MONGO_CONN_STRING) {
   throw new Error('Lunchbox needs valid MongoDB connection information in order to start.');
 }
 
+const port = process.env.PORT || 3000;
 (async () => {
   try {
     await dbClient.connect();
@@ -30,8 +33,18 @@ if (!process.env.MONGO_CONN_STRING) {
     console.error('Error connecting to MongoDB database:');
     console.error(e);
   }
-  const port = process.env.PORT || 3000
-  await app.start(process.env.PORT || 3000);
+
+  await app.start(port);
   console.log(`🍔 Lunchbot is running and ready to munch on port ${port}`);
   console.log(`Install URL: ${process.env.SLACK_APP_URL}/slack/install`);
 })();
+
+const server = express();
+server.use(bodyParser.urlencoded({extended: false}));
+server.get('/slack/install', (req, res) => {
+  receiver.installer!.handleInstallPath(req, res);
+})
+server.get('/slack/oauth_redirect', (req, res) => {
+  receiver.installer!.handleCallback(req, res);
+});
+server.listen(port);

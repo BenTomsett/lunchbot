@@ -1,11 +1,8 @@
-import dotenv from 'dotenv';
 import { App, SocketModeReceiver } from '@slack/bolt';
 
 import { scopes, userScopes } from './misc/scopes';
 import { installations, userTokens } from './db';
 import registerCommands from './commands';
-
-dotenv.config();
 
 export const receiver: SocketModeReceiver = new SocketModeReceiver({
   appToken: process.env.SLACK_APP_TOKEN!,
@@ -20,21 +17,23 @@ export const receiver: SocketModeReceiver = new SocketModeReceiver({
 
   installationStore: {
     storeInstallation: async (installation) => {
-      if (installation.isEnterpriseInstall) {
-        await installations.set(installation.enterprise!.id, installation);
-      } else {
-        await installations.set(installation.team!.id, installation);
+      try {
+        await installations.insertOne(installation);
+      } catch (e) {
+        throw new Error(`Error storing new installation: ${e}`);
       }
       if (installation.user && installation.user.token) {
-        await userTokens.set(installation.user.id, installation.user.token);
+        await userTokens.insertOne(
+          { userId: installation.user.id, token: installation.user.token },
+        );
       }
     },
     fetchInstallation: async (query) => {
       if (query.isEnterpriseInstall && query.enterpriseId !== undefined) {
-        return installations.get(query.enterpriseId);
+        await installations.findOne({ 'enterprise.id': query.enterpriseId });
       }
       if (query.teamId !== undefined) {
-        return installations.get(query.teamId);
+        await installations.findOne({ 'team.id': query.teamId });
       }
       throw new Error('Failed fetching installation');
     },

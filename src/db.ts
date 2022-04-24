@@ -1,8 +1,7 @@
-import Keyv from 'keyv';
+import { MongoClient } from 'mongodb';
 
-const { MONGO_HOST, MONGO_USER, MONGO_PASS } = process.env;
+const { MONGO_CONN_STRING } = process.env;
+export const dbClient = new MongoClient(MONGO_CONN_STRING!);
 
-const uri = `mongodb://${MONGO_USER}:${MONGO_PASS}@${MONGO_HOST}:27017/lunchbot`;
-
-export const installations = new Keyv(uri, { collection: 'installations' });
-export const userTokens = new Keyv(uri, { collection: 'userTokens' });
+export const installations = dbClient.db('lunchbot').collection('installations');
+export const userTokens = dbClient.db('lunchbot').collection('userTokens');

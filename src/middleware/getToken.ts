@@ -1,5 +1,4 @@
 import { Middleware, SlackCommandMiddlewareArgs } from '@slack/bolt/dist/types';
-import { Installation } from '@slack/bolt';
 import { installations, userTokens } from '../db';
 import {
   needAuthorisation,
@@ -15,17 +14,21 @@ const getToken: Middleware<SlackCommandMiddlewareArgs> = async ({
 }) => {
   await ack();
   try {
-    const installationKey = command.enterprise_id || command.team_id;
-    const install: Installation = await installations.get(installationKey);
-    const botToken = install.bot?.token;
+    let install;
+    if (command.enterprise_id) {
+      install = await installations.findOne({ 'enterprise.id': command.enterprise_id });
+    } else {
+      install = await installations.findOne({ 'team.id': command.team_id });
+    }
+    const botToken = install?.bot?.token;
 
-    const userToken = await userTokens.get(command.user_id);
+    const user = await userTokens.findOne({ userId: command.user_id });
 
-    if (!botToken || !userToken) {
+    if (!botToken || !user?.token) {
       await needAuthorisation(respond);
     } else {
       context.botToken = botToken;
-      context.userToken = userToken;
+      context.userToken = user.token;
       await next();
     }
   } catch (e: any) {

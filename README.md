@@ -17,11 +17,6 @@ This app is just me testing out Slack APIs, feel free to use but no guarantees a
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-## Getting Started
-Lunchbot first needs to be added to the workspace by the workspace admin, and then to any Slack channels you want to be able to use it in.
-
-The app isn't yet available on the Slack App Directory - so you'll need to self-host in. Lunchbot is a Node.js app using the Bolt for JavaScript SDK, and relies on a MongoDB database for storing installation data.
-
 ## Commands
 
 ### `/lunch`
@@ -50,6 +45,11 @@ Shows who's currently set as on lunch or away.
 **Usage:** `/here`
 
 <p align="right">(<a href="#top">back to top</a>)</p>
+
+## Getting Started
+Lunchbot first needs to be added to the workspace by the workspace admin, and then to any Slack channels you want to be able to use it in.
+
+The app isn't yet available on the Slack App Directory - so you'll need to self-host in. Lunchbot is a Node.js app using the Bolt for JavaScript SDK, and relies on a MongoDB database for storing installation data.
 
 ### Setup
 1) Create a new Slack app [here](https://api.slack.com/apps?new_app=1).

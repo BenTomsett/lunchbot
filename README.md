@@ -22,6 +22,35 @@ Lunchbot first needs to be added to the workspace by the workspace admin, and th
 
 The app isn't yet available on the Slack App Directory - so you'll need to self-host in. Lunchbot is a Node.js app using the Bolt for JavaScript SDK, and relies on a MongoDB database for storing installation data.
 
+## Commands
+
+### `/lunch`
+Sets yourself at lunch.
+
+**Usage:** `/lunch [<length> {hours | minutes}] `
+
+**Examples**<br/>
+`/lunch` - sets yourself at lunch indefinitely<br/>
+`/lunch 1 hour` - you can also use `hours`, `hrs`, `hr`, or `h`</br>
+`/lunch 30 minutes` - you can also use `minute`, `mins`, `min`, or `m`</br>
+
+### `/brb`
+Sets yourself as away temporarily.
+
+**Usage:** `/lunch`
+
+### `/back`
+Sets yourself as back, removes any status.
+
+**Usage:** `/back`
+
+### `/here`
+Shows who's currently set as on lunch or away.
+
+**Usage:** `/here`
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
 ### Setup
 1) Create a new Slack app [here](https://api.slack.com/apps?new_app=1).
    1) The App Name you choose will define how the app appears in Slack. You can use Lunchbot if you want.
@@ -63,35 +92,6 @@ The app isn't yet available on the Slack App Directory - so you'll need to self-
 5) Run some commands!
 
 The first time a user executes a command, they'll be asked to authorise Lunchbot by going through the OAuth flow, the same as in step 3.
-
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-## Commands
-
-### `/lunch`
-Sets yourself at lunch.
-
-**Usage:** `/lunch [<length> {hours | minutes}] `
-
-**Examples**<br/>
-`/lunch` - sets yourself at lunch indefinitely<br/>
-`/lunch 1 hour` - you can also use `hours`, `hrs`, `hr`, or `h`</br>
-`/lunch 30 minutes` - you can also use `minute`, `mins`, `min`, or `m`</br>
-
-### `/brb`
-Sets yourself as away temporarily.
-
-**Usage:** `/lunch`
-
-### `/back`
-Sets yourself as back, removes any status.
-
-**Usage:** `/back`
-
-### `/here`
-Shows who's currently set as on lunch or away.
-
-**Usage:** `/here`
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 

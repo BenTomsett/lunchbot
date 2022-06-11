@@ -1,0 +1,39 @@
+display_information:
+  name: Lunchbot
+  description: Go on lunch!
+  background_color: "#c55100"
+features:
+  bot_user:
+    display_name: Lunchbot
+    always_online: true
+  slash_commands:
+    - command: /lunch
+      description: Sets yourself at lunch.
+      usage_hint: "[<length> {hours | minutes}]"
+      should_escape: false
+    - command: /brb
+      description: Sets yourself as away temporarily.
+      should_escape: false
+    - command: /back
+      description: Removes any away status.
+      should_escape: false
+    - command: /here
+      description: Shows who's currently on lunch or away.
+      should_escape: false
+oauth_config:
+  scopes:
+    user:
+      - channels:read
+      - users.profile:read
+      - users.profile:write
+    bot:
+      - commands
+      - channels:read
+      - chat:write
+      - users.profile:read
+settings:
+  interactivity:
+    is_enabled: true
+  org_deploy_enabled: false
+  socket_mode_enabled: true
+  token_rotation_enabled: false

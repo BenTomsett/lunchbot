@@ -10,7 +10,7 @@
     "build": "tsc"
   },
   "engines": {
-    "node": "16.13.0"
+    "node": ">=16.13.0"
   },
   "dependencies": {
     "@keyv/mongo": "^2.1.6",

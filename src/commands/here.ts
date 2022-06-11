@@ -9,7 +9,7 @@ const hereCommandCallback: Middleware<SlackCommandMiddlewareArgs> = async ({
 }) => {
   await ack();
 
-  console.info(`⬇️ ${command.user_id} (${command.user_name}) invoked /here`);
+  console.log(`⬇️ ${command.user_id} (${command.user_name}) invoked /here`);
 
   // How do we know who's not here?
   // 1) if they have 'On lunch' as their status text and ':knife_fork_plate:' as their status emoji

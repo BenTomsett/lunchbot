@@ -9,7 +9,7 @@ const brbCommandCallback: Middleware<SlackCommandMiddlewareArgs> = async ({
 }) => {
   await ack();
 
-  console.info(`⬇️ ${command.user_id} (${command.user_name}) invoked /brb`);
+  console.log(`⬇️ ${command.user_id} (${command.user_name}) invoked /brb`);
 
   await say(
     `<!here> - <@${command.user_id}> will be right back`,

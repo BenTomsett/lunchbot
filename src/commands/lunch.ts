@@ -12,7 +12,7 @@ const lunchCommandCallback: Middleware<SlackCommandMiddlewareArgs> = async ({
 }) => {
   await ack();
 
-  console.info(`⬇️ ${command.user_id} (${command.user_name}) invoked /lunch`);
+  console.log(`⬇️ ${command.user_id} (${command.user_name}) invoked /lunch`);
 
   let formattedDate;
 

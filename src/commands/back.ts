@@ -9,7 +9,7 @@ const backCommandCallback: Middleware<SlackCommandMiddlewareArgs> = async ({
 }) => {
   await ack();
 
-  console.info(`⬇️ ${command.user_id} (${command.user_name}) invoked /back`);
+  console.log(`⬇️ ${command.user_id} (${command.user_name}) invoked /back`);
 
   await say(
     `<!here> - <@${command.user_id}> is back`,

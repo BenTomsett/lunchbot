@@ -9,6 +9,8 @@ const hereCommandCallback: Middleware<SlackCommandMiddlewareArgs> = async ({
 }) => {
   await ack();
 
+  console.info(`⬇️ ${command.user_id} (${command.user_name}) invoked /here`);
+
   // How do we know who's not here?
   // 1) if they have 'On lunch' as their status text and ':knife_fork_plate:' as their status emoji
   // 2) if they have 'BRB' as their status text and ':clock1:' as their status emoji
@@ -82,6 +84,9 @@ const hereCommandCallback: Middleware<SlackCommandMiddlewareArgs> = async ({
           },
         },
       ],
+    }).catch((err) => {
+      console.error('⚠️ Unable to send response:');
+      console.error(err);
     });
   }
 };

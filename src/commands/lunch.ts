@@ -12,6 +12,8 @@ const lunchCommandCallback: Middleware<SlackCommandMiddlewareArgs> = async ({
 }) => {
   await ack();
 
+  console.info(`⬇️ ${command.user_id} (${command.user_name}) invoked /lunch`);
+
   let formattedDate;
 
   if (command.text !== '') {
@@ -44,7 +46,10 @@ const lunchCommandCallback: Middleware<SlackCommandMiddlewareArgs> = async ({
     `<!here> - <@${command.user_id}> is going on lunch ${formattedDate
       ? `until ${formattedDate} `
       : ''}:knife_fork_plate:`,
-  );
+  ).catch((err) => {
+    console.error('⚠️ Unable to send response:');
+    console.error(err);
+  });
 
   await client.users.profile.set({
     token: context.userToken,
@@ -52,8 +57,9 @@ const lunchCommandCallback: Middleware<SlackCommandMiddlewareArgs> = async ({
       status_text: `On lunch ${formattedDate ? `until ${formattedDate} ` : ''}`,
       status_emoji: ':knife_fork_plate:',
     }),
-  }).catch(async (err) => {
-    console.log(err);
+  }).catch((err) => {
+    console.error('⚠️ Unable to update user\'s Slack status:');
+    console.error(err);
   });
 };
 

@@ -3,7 +3,7 @@ import { installations, userTokens } from '../db';
 import {
   needAuthorisation,
 } from '../responses/authResponses';
-import { adminErrorResponse } from '../responses/errorResponses';
+import { errorResponse } from '../responses/errorResponses';
 
 const getToken: Middleware<SlackCommandMiddlewareArgs> = async ({
   ack,
@@ -25,6 +25,7 @@ const getToken: Middleware<SlackCommandMiddlewareArgs> = async ({
     const user = await userTokens.findOne({ userId: command.user_id });
 
     if (!botToken || !user?.token) {
+      console.error(`⚠️ No token found for user ${command.user_id} (${command.user_name})`);
       await needAuthorisation(respond);
     } else {
       context.botToken = botToken;
@@ -32,7 +33,8 @@ const getToken: Middleware<SlackCommandMiddlewareArgs> = async ({
       await next();
     }
   } catch (e: any) {
-    await adminErrorResponse(respond, e.message);
+    console.error(`⚠️ Error getting token, error message: ${e.message}`);
+    await errorResponse(respond);
   }
 };
 

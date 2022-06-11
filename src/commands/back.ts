@@ -9,9 +9,14 @@ const backCommandCallback: Middleware<SlackCommandMiddlewareArgs> = async ({
 }) => {
   await ack();
 
+  console.info(`⬇️ ${command.user_id} (${command.user_name}) invoked /back`);
+
   await say(
     `<!here> - <@${command.user_id}> is back`,
-  );
+  ).catch((err) => {
+    console.error('⚠️ Unable to send response:');
+    console.error(err);
+  });
 
   await client.users.profile.set({
     token: context.userToken,
@@ -19,8 +24,9 @@ const backCommandCallback: Middleware<SlackCommandMiddlewareArgs> = async ({
       status_text: '',
       status_emoji: '',
     }),
-  }).catch(async (err) => {
-    console.log(err);
+  }).catch((err) => {
+    console.error('⚠️ Unable to update user\'s Slack status:');
+    console.error(err);
   });
 };
 

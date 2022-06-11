@@ -9,9 +9,14 @@ const brbCommandCallback: Middleware<SlackCommandMiddlewareArgs> = async ({
 }) => {
   await ack();
 
+  console.info(`⬇️ ${command.user_id} (${command.user_name}) invoked /brb`);
+
   await say(
     `<!here> - <@${command.user_id}> will be right back`,
-  );
+  ).catch((err) => {
+    console.error('⚠️ Unable to send response:');
+    console.error(err);
+  });
 
   await client.users.profile.set({
     token: context.userToken,
@@ -20,7 +25,8 @@ const brbCommandCallback: Middleware<SlackCommandMiddlewareArgs> = async ({
       status_emoji: ':clock1:',
     }),
   }).catch(async (err) => {
-    console.log(err);
+    console.error('⚠️ Unable to update user\'s Slack status:');
+    console.error(err);
   });
 };
 

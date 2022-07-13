@@ -52,7 +52,7 @@ const lunchCommandCallback: Middleware<SlackCommandMiddlewareArgs> = async ({
   }
 
   await say(
-    `<!here> - <@${command.user_id}> is going on lunch${statusExpiration > 0 ? `<!date^${statusExpiration}^until {time}| >` : ''} :hamburger:`,
+    `<!here> - <@${command.user_id}> is going on lunch${statusExpiration > 0 ? `<!date^${statusExpiration}^ until {time}| >` : ''} :hamburger:`,
   ).catch((err) => {
     console.error('⚠️ Unable to send response:');
     console.error(err);

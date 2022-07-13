@@ -46,7 +46,7 @@ const hereCommandCallback: Middleware<SlackCommandMiddlewareArgs> = async ({
       lunchString = 'Nobody is on lunch break.';
     } else {
       lunch.forEach((member) => {
-        lunchString += `<@${member.id}>${member.until > 0 && `<!date^${member.until}^ until {time}| >`}\n`;
+        lunchString += `<@${member.id}>${member.until > 0 ? `<!date^${member.until}^ until {time}| >` : ''}\n`;
       });
     }
 

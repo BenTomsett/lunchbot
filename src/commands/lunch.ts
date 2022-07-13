@@ -48,27 +48,27 @@ const lunchCommandCallback: Middleware<SlackCommandMiddlewareArgs> = async ({
       }
 
       statusExpiration = Math.floor(date.getTime() / 1000);
-
-      await say(
-        `<!here> - <@${command.user_id}> is going on lunch${statusExpiration > 0 ? `<!date^${statusExpiration}^until {time}| >` : ''} :hamburger:`,
-      ).catch((err) => {
-        console.error('⚠️ Unable to send response:');
-        console.error(err);
-      });
-
-      await client.users.profile.set({
-        token: context.userToken,
-        profile: JSON.stringify({
-          status_text: 'On lunch',
-          status_emoji: ':hamburger:',
-          status_expiration: statusExpiration,
-        }),
-      }).catch((err) => {
-        console.error('⚠️ Unable to update user\'s Slack status:');
-        console.error(err);
-      });
     }
   }
+
+  await say(
+    `<!here> - <@${command.user_id}> is going on lunch${statusExpiration > 0 ? `<!date^${statusExpiration}^until {time}| >` : ''} :hamburger:`,
+  ).catch((err) => {
+    console.error('⚠️ Unable to send response:');
+    console.error(err);
+  });
+
+  await client.users.profile.set({
+    token: context.userToken,
+    profile: JSON.stringify({
+      status_text: 'On lunch',
+      status_emoji: ':hamburger:',
+      status_expiration: statusExpiration,
+    }),
+  }).catch((err) => {
+    console.error('⚠️ Unable to update user\'s Slack status:');
+    console.error(err);
+  });
 };
 
 export default lunchCommandCallback;

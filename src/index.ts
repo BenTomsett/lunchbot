@@ -10,19 +10,19 @@ import { dbClient } from './db';
 import { scopes, userScopes } from './misc/scopes';
 
 if (!process.env.SLACK_APP_TOKEN) {
-  throw new Error('Lunchbox needs a valid app-level token in order to start.');
+  throw new Error('Lunchbot needs a valid app-level token in order to start.');
 }
 
 if (!process.env.SLACK_CLIENT_ID) {
-  throw new Error('Lunchbox needs a valid Slack client ID in order to start.');
+  throw new Error('Lunchbot needs a valid Slack client ID in order to start.');
 }
 
 if (!process.env.SLACK_CLIENT_SECRET) {
-  throw new Error('Lunchbox needs a valid Slack client secret in order to start.');
+  throw new Error('Lunchbot needs a valid Slack client secret in order to start.');
 }
 
 if (!process.env.MONGO_CONN_STRING) {
-  throw new Error('Lunchbox needs valid MongoDB connection information in order to start.');
+  throw new Error('Lunchbot needs valid MongoDB connection information in order to start.');
 }
 
 const port = process.env.PORT || 3000;

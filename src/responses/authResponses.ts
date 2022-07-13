@@ -24,12 +24,11 @@ export const needAuthorisation = async (respond: RespondFn) => {
             },
             action_id: 'authorise',
             style: 'primary',
-            url: process.env.SLACK_INSTALL_URL,
+            url: `${process.env.SLACK_APP_URL}/slack/install`,
           },
         ],
       },
     ],
-
   });
 };
 

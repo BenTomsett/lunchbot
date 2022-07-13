@@ -3,6 +3,7 @@ import { App, Installation, SocketModeReceiver } from '@slack/bolt';
 import { scopes, userScopes } from './misc/scopes';
 import { installations, userTokens } from './db';
 import registerCommands from './commands';
+import registerActions from './actions';
 
 export const receiver: SocketModeReceiver = new SocketModeReceiver({
   appToken: process.env.SLACK_APP_TOKEN!,
@@ -61,6 +62,7 @@ const app = new App({
 });
 
 registerCommands(app);
+registerActions(app);
 
 app.error(async (err) => {
   console.error('⛔️ Unspecified error:');

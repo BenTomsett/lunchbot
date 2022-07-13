@@ -3,10 +3,15 @@ export const scopes = [
   'chat:write',
   'commands',
   'users.profile:read',
+  'groups:read',
+  'im:read',
+  'mpim:read',
 ];
 
 export const userScopes = [
   'channels:read',
-  'users.profile:write',
   'users.profile:read',
+  'users.profile:write',
+  'im:read',
+  'mpim:read',
 ];

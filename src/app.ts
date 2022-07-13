@@ -67,6 +67,8 @@ registerActions(app);
 app.error(async (err) => {
   console.error('⛔️ Unspecified error:');
   console.error(err);
+  console.error('Printing stack trace:');
+  console.log(err.stack);
 });
 
 export default app;

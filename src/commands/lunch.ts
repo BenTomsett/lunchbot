@@ -1,4 +1,7 @@
-import { Middleware, SlackCommandMiddlewareArgs } from '@slack/bolt/dist/types';
+import {
+  Middleware,
+  SlackCommandMiddlewareArgs,
+} from '@slack/bolt/dist/types';
 import { addHours, addMinutes } from 'date-fns';
 import { invalidLunchParameters } from '../responses/commandResponses';
 
@@ -23,52 +26,58 @@ const lunchCommandCallback: Middleware<SlackCommandMiddlewareArgs> = async ({
     let args = command.text.split(' ');
 
     if (args.length === 1) {
-      args = args[0].split(/([0-9]+)/).filter((arg) => arg !== '');
+      args = args[0].split(/([0-9]+)/)
+        .filter((arg) => arg !== '');
     }
 
     if (args.length !== 2) {
-      await invalidLunchParameters(respond);
-    } else if (Number.isNaN(args[0])) {
-      await invalidLunchParameters(respond);
-    } else {
-      let date = new Date();
-      const length = parseInt(args[0], 10);
-      const unit = args[1];
-
-      if (length <= 0) {
-        await invalidLunchParameters(respond);
-      }
-
-      if (validHourUnits.includes(unit)) {
-        date = addHours(date, length);
-      } else if (validMinuteUnits.includes(unit)) {
-        date = addMinutes(date, length);
-      } else {
-        await invalidLunchParameters(respond);
-      }
-
-      statusExpiration = Math.floor(date.getTime() / 1000);
+      return invalidLunchParameters(respond);
     }
+    if (Number.isNaN(args[0])) {
+      return invalidLunchParameters(respond);
+    }
+
+    let date = new Date();
+    const length = parseInt(args[0], 10);
+    const unit = args[1];
+
+    if (length <= 0) {
+      return invalidLunchParameters(respond);
+    }
+
+    if (validHourUnits.includes(unit)) {
+      date = addHours(date, length);
+    } else if (validMinuteUnits.includes(unit)) {
+      date = addMinutes(date, length);
+    } else {
+      return invalidLunchParameters(respond);
+    }
+
+    statusExpiration = Math.floor(date.getTime() / 1000);
   }
 
-  await say(
-    `<!here> - <@${command.user_id}> is going on lunch${statusExpiration > 0 ? `<!date^${statusExpiration}^ until {time}| >` : ''} :hamburger:`,
-  ).catch((err) => {
-    console.error('⚠️ Unable to send response:');
-    console.error(err);
-  });
+  return (async () => {
+    await say(
+      `<!here> - <@${command.user_id}> is going on lunch${statusExpiration > 0 ? `<!date^${statusExpiration}^ until {time}| >` : ''} :hamburger:`,
+    )
+      .catch((err) => {
+        console.error('⚠️ Unable to send response:');
+        console.error(err);
+      });
 
-  await client.users.profile.set({
-    token: context.userToken,
-    profile: JSON.stringify({
-      status_text: 'On lunch',
-      status_emoji: ':hamburger:',
-      status_expiration: statusExpiration,
-    }),
-  }).catch((err) => {
-    console.error('⚠️ Unable to update user\'s Slack status:');
-    console.error(err);
-  });
+    await client.users.profile.set({
+      token: context.userToken,
+      profile: JSON.stringify({
+        status_text: 'On lunch',
+        status_emoji: ':hamburger:',
+        status_expiration: statusExpiration,
+      }),
+    })
+      .catch((err) => {
+        console.error('⚠️ Unable to update user\'s Slack status:');
+        console.error(err);
+      });
+  })();
 };
 
 export default lunchCommandCallback;

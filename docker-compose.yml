@@ -1,0 +1,16 @@
+version: '3.3'
+services:
+  lunchbot:
+    restart: always
+    build: .
+    ports:
+      - "3001:3001"
+  mongo:
+    image: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb:/data/db
+    command: mongod --quiet --logpath /dev/null
+volumes:
+  mongodb:

@@ -25,7 +25,7 @@ if (!process.env.MONGO_CONN_STRING) {
   throw new Error('Lunchbot needs valid MongoDB connection information in order to start.');
 }
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3001;
 (async () => {
   try {
     await dbClient.connect();

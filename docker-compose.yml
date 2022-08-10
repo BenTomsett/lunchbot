@@ -4,8 +4,6 @@ services:
     container_name: lunchbot-app
     restart: always
     build: .
-    ports:
-      - "3001:3001"
     depends_on:
       - mongo
     environment:
@@ -16,8 +14,6 @@ services:
   mongo:
     container_name: lunchbot-db
     image: mongo
-    ports:
-      - "27017:27017"
     volumes:
       - mongodb:/data/db
     command: mongod --quiet --logpath /dev/null

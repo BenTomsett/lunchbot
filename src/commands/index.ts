@@ -10,6 +10,7 @@ import hereCommandCallback from './here';
 const registerCommands = (app: App) => {
   app.command('/lunch', getToken, inChannel, lunchCommandCallback);
   app.command('/back', getToken, inChannel, backCommandCallback);
+  app.command('/bk', getToken, inChannel, backCommandCallback);
   app.command('/brb', getToken, inChannel, brbCommandCallback);
   app.command('/here', getToken, inChannel, hereCommandCallback);
 };

@@ -20,3 +20,9 @@ services:
 
 volumes:
   mongodb:
+
+networks:
+  default:
+    external:
+      name: nginx
+

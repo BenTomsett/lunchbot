@@ -2,8 +2,8 @@ version: '3.3'
 services:
   lunchbot:
     container_name: lunchbot-app
+    image: "ghcr.io/bentomsett/lunchbot:latest"
     restart: always
-    build: .
     depends_on:
       - mongo
     environment:

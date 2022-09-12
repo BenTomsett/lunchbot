@@ -7,7 +7,7 @@
   "scripts": {
     "lint": "eslint . --ext .ts",
     "start": "node .",
-    "build": "tsc",
+    "build": "tsc && cp -R src/static dist",
     "dev": "nodemon ./src/index.ts"
   },
   "engines": {

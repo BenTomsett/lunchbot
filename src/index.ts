@@ -5,6 +5,7 @@ dotenv.config();
 
 import express from 'express';
 import bodyParser from 'body-parser';
+import path from 'path';
 import app, { receiver } from './app';
 import { dbClient } from './db';
 import { scopes, userScopes } from './misc/scopes';
@@ -41,6 +42,8 @@ const port = process.env.PORT || 3001;
 })();
 
 const server = express();
+
+server.use(express.static(path.join(__dirname, 'static')));
 
 server.use(bodyParser.urlencoded({ extended: false }));
 

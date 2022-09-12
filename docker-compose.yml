@@ -6,8 +6,6 @@ services:
     build: .
     depends_on:
       - mongo
-    ports:
-      - "3001:3001"
     environment:
       - SLACK_CLIENT_SECRET=$SLACK_CLIENT_SECRET
       - SLACK_CLIENT_ID=$SLACK_CLIENT_ID

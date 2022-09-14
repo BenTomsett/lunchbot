@@ -13,7 +13,6 @@
 
 ## About
 Lunchbot give you a set of commands to manage your status on Slack, and see who's currently away from their desk.
-Feel free to use but no guarantees are made on reliability - this was just a personal project.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -34,7 +33,7 @@ Sets yourself as away temporarily.
 
 **Usage:** `/lunch`
 
-### `/back`
+### `/back` OR `/bk`
 Sets yourself as back, removes any status.
 
 **Usage:** `/back`

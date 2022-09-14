@@ -29,7 +29,7 @@
     "@typescript-eslint/parser": "^5.9.0",
     "eslint": "^8.23.1",
     "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-config-airbnb-typescript": "^16.1.0",
+    "eslint-config-airbnb-typescript": "^17.0.0",
     "eslint-plugin-import": "^2.26.0",
     "nodemon": "^2.0.16",
     "ts-node": "^10.8.1",

@@ -3,7 +3,6 @@ name: Build app image
 on:
   push:
     branches: [main]
-  pull_request:
   
 jobs:
   build-app-image:

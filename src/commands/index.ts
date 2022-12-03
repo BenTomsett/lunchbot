@@ -6,6 +6,7 @@ import lunchCommandCallback from './lunch';
 import backCommandCallback from './back';
 import brbCommandCallback from './brb';
 import hereCommandCallback from './here';
+import flipacoinCommandCallback from './flipacoin';
 
 const registerCommands = (app: App) => {
   app.command('/lunch', getToken, inChannel, lunchCommandCallback);
@@ -13,6 +14,7 @@ const registerCommands = (app: App) => {
   app.command('/bk', getToken, inChannel, backCommandCallback);
   app.command('/brb', getToken, inChannel, brbCommandCallback);
   app.command('/here', getToken, inChannel, hereCommandCallback);
+  app.command('/flipacoin', getToken, inChannel, flipacoinCommandCallback);
 };
 
 export default registerCommands;

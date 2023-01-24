@@ -20,6 +20,13 @@ features:
     - command: /here
       description: Shows who's currently on lunch or away.
       should_escape: false
+    - command: /flipacoin
+      description: Flips a coin.
+      should_escape: false
+    - command: /choose
+      description: Picks a random item from a list.
+      usage_hint: "<item1> [<item2> ...]"
+      should_escape: false
 scopes:
   user:
     - channels:read

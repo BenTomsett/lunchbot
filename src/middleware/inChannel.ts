@@ -1,5 +1,6 @@
 import { Middleware, SlackCommandMiddlewareArgs } from '@slack/bolt/dist/types';
 import { needAddedToChannel, needReauthorisation } from '../responses/authResponses';
+import rollbar from '../misc/rollbar';
 
 const inChannel: Middleware<SlackCommandMiddlewareArgs> = async ({
   ack,
@@ -13,7 +14,7 @@ const inChannel: Middleware<SlackCommandMiddlewareArgs> = async ({
   try {
     const { members } = await client.conversations.members({ channel: command.channel_id });
     if (!members || !members.includes(context.botUserId!)) {
-      console.error(`⚠️ Command invoked by ${command.user_id} (${command.user_name}) where Lunchbot was not in channel (${command.channel_name})`);
+      rollbar.error(`Command invoked by ${command.user_id} (${command.user_name}) where Lunchbot was not in channel (${command.channel_name})`);
       await needAddedToChannel(respond);
     } else {
       await next();

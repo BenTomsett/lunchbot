@@ -4,6 +4,7 @@ import { scopes, userScopes } from './misc/scopes';
 import { installations } from './db';
 import registerCommands from './commands';
 import registerActions from './actions';
+import rollbar from './misc/rollbar';
 
 export const receiver: SocketModeReceiver = new SocketModeReceiver({
   appToken: process.env.SLACK_APP_TOKEN!,
@@ -20,11 +21,10 @@ export const receiver: SocketModeReceiver = new SocketModeReceiver({
     storeInstallation: async (installation) => {
       await installations.insertOne(installation)
         .then(() => {
-          console.info(`✅ New workspace installation completed - ${installation.team?.name}`);
+          rollbar.info(`✅ New workspace installation completed - ${installation.team?.name}`);
         })
         .catch((err) => {
-          console.error('⛔️ Error saving new workspace installation details:');
-          console.error(err);
+          rollbar.error('⛔️ Error saving new workspace installation details:', err);
         });
     },
     fetchInstallation: async (query) => {
@@ -47,10 +47,7 @@ registerCommands(app);
 registerActions(app);
 
 app.error(async (err) => {
-  console.error('⛔️ Unspecified error:');
-  console.error(err);
-  console.error('Printing stack trace:');
-  console.log(err.stack);
+  rollbar.error('Unspecified error', err);
 });
 
 export default app;

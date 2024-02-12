@@ -4,6 +4,7 @@ import {
 } from '@slack/bolt/dist/types';
 import { addHours, addMinutes } from 'date-fns';
 import { invalidLunchParameters } from '../responses/commandResponses';
+import rollbar from '../misc/rollbar';
 
 const lunchCommandCallback: Middleware<SlackCommandMiddlewareArgs> = async ({
   command,
@@ -61,8 +62,7 @@ const lunchCommandCallback: Middleware<SlackCommandMiddlewareArgs> = async ({
       `<!here> - <@${command.user_id}> is going on lunch${statusExpiration > 0 ? `<!date^${statusExpiration}^ until {time}| >` : ''} :hamburger:`,
     )
       .catch((err) => {
-        console.error('⚠️ Unable to send response:');
-        console.error(err);
+        rollbar.error('Unable to send response', err);
       });
 
     await client.users.profile.set({
@@ -74,8 +74,7 @@ const lunchCommandCallback: Middleware<SlackCommandMiddlewareArgs> = async ({
       }),
     })
       .catch((err) => {
-        console.error('⚠️ Unable to update user\'s Slack status:');
-        console.error(err);
+        rollbar.error('Unable to update user\'s Slack status', err);
       });
   })();
 };

@@ -1,4 +1,5 @@
 import { Middleware, SlackCommandMiddlewareArgs } from '@slack/bolt/dist/types';
+import rollbar from '../misc/rollbar';
 
 const chooseCommandCallback: Middleware<SlackCommandMiddlewareArgs> = async ({
   command,
@@ -15,8 +16,7 @@ const chooseCommandCallback: Middleware<SlackCommandMiddlewareArgs> = async ({
   await say(
     `${choice} is the chosen one!`,
   ).catch((err) => {
-    console.error('⚠️ Unable to send response:');
-    console.error(err);
+    rollbar.error('Unable to send response', err);
   });
 };
 

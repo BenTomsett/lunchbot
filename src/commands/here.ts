@@ -1,5 +1,6 @@
 import { Middleware, SlackCommandMiddlewareArgs } from '@slack/bolt/dist/types';
 import { UsersProfileGetResponse } from '@slack/web-api';
+import rollbar from '../misc/rollbar';
 
 const hereCommandCallback: Middleware<SlackCommandMiddlewareArgs> = async ({
   command,
@@ -78,8 +79,7 @@ const hereCommandCallback: Middleware<SlackCommandMiddlewareArgs> = async ({
         },
       ],
     }).catch((err) => {
-      console.error('⚠️ Unable to send response:');
-      console.error(err);
+      rollbar.error('Unable to send response', err);
     });
   }
 };

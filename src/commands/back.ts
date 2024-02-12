@@ -1,4 +1,5 @@
 import { Middleware, SlackCommandMiddlewareArgs } from '@slack/bolt/dist/types';
+import rollbar from '../misc/rollbar';
 
 const backCommandCallback: Middleware<SlackCommandMiddlewareArgs> = async ({
   command,
@@ -14,8 +15,7 @@ const backCommandCallback: Middleware<SlackCommandMiddlewareArgs> = async ({
   await say(
     `<!here> - <@${command.user_id}> is back`,
   ).catch((err) => {
-    console.error('⚠️ Unable to send response:');
-    console.error(err);
+    rollbar.error('Unable to send response', err);
   });
 
   await client.users.profile.set({
@@ -25,8 +25,7 @@ const backCommandCallback: Middleware<SlackCommandMiddlewareArgs> = async ({
       status_emoji: '',
     }),
   }).catch((err) => {
-    console.error('⚠️ Unable to update user\'s Slack status:');
-    console.error(err);
+    rollbar.error('Unable to update user\'s Slack status', err);
   });
 };
 

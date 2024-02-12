@@ -10,6 +10,8 @@ import app, { receiver } from './app';
 import { dbClient } from './db';
 import { scopes, userScopes } from './misc/scopes';
 
+import rollbar from './misc/rollbar';
+
 if (!process.env.SLACK_APP_TOKEN) {
   throw new Error('Lunchbot needs a valid app-level token in order to start.');
 }
@@ -43,8 +45,8 @@ const port = process.env.PORT || 3001;
 
 const server = express();
 
+server.use(rollbar.errorHandler());
 server.use(express.static(path.join(__dirname, 'static')));
-
 server.use(bodyParser.urlencoded({ extended: false }));
 
 server.get('/slack/install', (req, res) => {

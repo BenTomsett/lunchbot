@@ -1,4 +1,5 @@
 import { Middleware, SlackCommandMiddlewareArgs } from '@slack/bolt/dist/types';
+import rollbar from '../misc/rollbar';
 
 const flipacoinCommandCallback: Middleware<SlackCommandMiddlewareArgs> = async ({
   command,
@@ -14,8 +15,7 @@ const flipacoinCommandCallback: Middleware<SlackCommandMiddlewareArgs> = async (
   await say(
     `It's ${coinToss}!`,
   ).catch((err) => {
-    console.error('⚠️ Unable to send response:');
-    console.error(err);
+    rollbar.error('Unable to send response', err);
   });
 };
 

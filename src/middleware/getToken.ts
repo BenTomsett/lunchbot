@@ -4,6 +4,7 @@ import {
   needAuthorisation,
 } from '../responses/authResponses';
 import { installations } from '../db';
+import rollbar from '../misc/rollbar';
 
 const getToken: Middleware<SlackCommandMiddlewareArgs> = async ({
   ack,
@@ -23,7 +24,7 @@ const getToken: Middleware<SlackCommandMiddlewareArgs> = async ({
     context.userToken = install.user.token;
     await next();
   } else {
-    console.error(`⚠️ No user token found for user ${command.user_id} (${command.user_name})`);
+    rollbar.error(`No user token found for user ${command.user_id} (${command.user_name})`);
     await needAuthorisation(respond);
   }
 };

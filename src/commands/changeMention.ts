@@ -16,9 +16,9 @@ const changeMentionCommandCallback: Middleware<SlackCommandMiddlewareArgs> = asy
   // user mentions                 -> <@U02S5G1SN8M|benji>
   // bot/app mentions              -> <@U06JQ5XF89F|lunchbot2>
   // channel mentions              -> <#C03PN47NT09|>
-  // user group mentions           -> <!subteam^S06JQ5XFA|frontend>
+  // user group mentions           -> <!subteam^S06JQ5XFA|@team-name>
 
-  const mentionRegex = /<(([@!#]|(!subteam\^))[A-Z0-9]+)(\|[a-z0-9]*)?>/i;
+  const mentionRegex = /<(([@!#]|(!subteam\^))[A-Z0-9]+)(\|[a-z0-9@-]*)?>/i;
 
   if (command.text === '') {
     return invalidChangeMentionParameters(respond);

@@ -27,21 +27,22 @@ features:
       description: Picks a random item from a list.
       usage_hint: "<item1> [<item2> ...]"
       should_escape: false
-scopes:
-  user:
-    - channels:read
-    - users.profile:read
-    - users.profile:write
-    - im:read
-    - mpim:read
-  bot:
-    - channels:read
-    - chat:write
-    - commands
-    - users.profile:read
-    - groups:read
-    - im:read
-    - mpim:read
+oauth_config:
+  scopes:
+    user:
+      - channels:read
+      - users.profile:read
+      - users.profile:write
+      - im:read
+      - mpim:read
+    bot:
+      - channels:read
+      - chat:write
+      - commands
+      - users.profile:read
+      - groups:read
+      - im:read
+      - mpim:read
 settings:
   interactivity:
     is_enabled: true

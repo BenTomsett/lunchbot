@@ -1,5 +1,6 @@
 import { Middleware, SlackCommandMiddlewareArgs } from '@slack/bolt/dist/types';
 import rollbar from '../misc/rollbar';
+import getChannelMention from '../misc/utils';
 
 const brbCommandCallback: Middleware<SlackCommandMiddlewareArgs> = async ({
   command,
@@ -13,7 +14,7 @@ const brbCommandCallback: Middleware<SlackCommandMiddlewareArgs> = async ({
   console.log(`⬇️ ${command.user_id} (${command.user_name}) invoked /brb`);
 
   await say(
-    `<!here> - <@${command.user_id}> will be right back`,
+    `${await getChannelMention(command.channel_id)} - <@${command.user_id}> will be right back`,
   ).catch((err) => {
     rollbar.error('Unable to send response', err);
   });

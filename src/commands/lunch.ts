@@ -5,6 +5,7 @@ import {
 import { addHours, addMinutes } from 'date-fns';
 import { invalidLunchParameters } from '../responses/commandResponses';
 import rollbar from '../misc/rollbar';
+import getChannelMention from '../misc/utils';
 
 const lunchCommandCallback: Middleware<SlackCommandMiddlewareArgs> = async ({
   command,
@@ -59,7 +60,7 @@ const lunchCommandCallback: Middleware<SlackCommandMiddlewareArgs> = async ({
 
   return (async () => {
     await say(
-      `<!here> - <@${command.user_id}> is going on lunch${statusExpiration > 0 ? `<!date^${statusExpiration}^ until {time}| >` : ''} :hamburger:`,
+      `${await getChannelMention(command.channel_id)} - <@${command.user_id}> is going on lunch${statusExpiration > 0 ? `<!date^${statusExpiration}^ until {time}| >` : ''} :hamburger:`,
     )
       .catch((err) => {
         rollbar.error('Unable to send response', err);

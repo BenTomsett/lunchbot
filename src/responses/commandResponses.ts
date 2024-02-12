@@ -13,3 +13,10 @@ export const invalidChooseParameters = async (respond: RespondFn) => {
     text: 'Enter a command in the format `/choose options...`, for example `/choose hamburger pizza`. The options can be strings, numbers, or you can tag other users as an option. You must specify 2 or more options separated by spaces.',
   });
 };
+
+export const invalidChangeMentionParameters = async (respond: RespondFn) => {
+  await respond({
+    response_type: 'ephemeral',
+    text: 'Enter a command in the format `/change_mention <mention>`, for example `/change_mention @group`. The option must be a valid Slack mention, such as @here, #channel_name, or @user_name.',
+  });
+};

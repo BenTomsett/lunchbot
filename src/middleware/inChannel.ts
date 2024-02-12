@@ -22,6 +22,8 @@ const inChannel: Middleware<SlackCommandMiddlewareArgs> = async ({
   } catch (e: any) {
     if (e.data.error === 'missing_scope') {
       await needReauthorisation(respond);
+    } else {
+      throw e;
     }
   }
 };

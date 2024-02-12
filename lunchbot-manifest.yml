@@ -25,8 +25,14 @@ features:
       should_escape: false
     - command: /choose
       description: Picks a random item from a list.
-      usage_hint: "<item1> [<item2> ...]"
+      usage_hint: "[<item1> <item2>  ...]"
       should_escape: false
+    - command: /bk
+      description: Removes any away status.
+      should_escape: false
+    - command: /change_mention
+      description: Changes the @mention to use in responses
+      should_escape: true
 oauth_config:
   scopes:
     user:
@@ -39,11 +45,14 @@ oauth_config:
       - channels:read
       - chat:write
       - commands
-      - users.profile:read
       - groups:read
       - im:read
       - mpim:read
+      - users.profile:read
 settings:
+  event_subscriptions:
+    bot_events:
+      - member_joined_channel
   interactivity:
     is_enabled: true
   org_deploy_enabled: false

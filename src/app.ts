@@ -4,6 +4,7 @@ import { scopes, userScopes } from './misc/scopes';
 import { installations } from './db';
 import registerCommands from './commands';
 import registerActions from './actions';
+import registerEvents from './events';
 import rollbar from './misc/rollbar';
 
 export const receiver: SocketModeReceiver = new SocketModeReceiver({
@@ -45,6 +46,7 @@ const app = new App({
 
 registerCommands(app);
 registerActions(app);
+registerEvents(app);
 
 app.error(async (err) => {
   rollbar.error('Unspecified error', err);

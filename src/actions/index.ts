@@ -6,6 +6,8 @@ const authoriseAction: Middleware<SlackActionMiddlewareArgs> = async ({ ack }) =
 };
 
 const registerActions = (app: App) => {
+  console.info('Registering actions...');
+
   app.action('authorise', authoriseAction);
 };
 

@@ -80,3 +80,19 @@ export const needAddedToChannel = async (respond: RespondFn) => {
     ],
   });
 };
+
+export const needAdminPerms = async (respond: RespondFn) => {
+  await respond({
+    response_type: 'ephemeral',
+    blocks: [
+      {
+        type: 'section',
+        text: {
+          type: 'plain_text',
+          text: 'This command can only be run by Lunchbot admins. If you think you should have access, please ask an existing admin to add you to the list.',
+          emoji: true,
+        },
+      },
+    ],
+  });
+};

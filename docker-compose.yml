@@ -11,6 +11,8 @@ services:
       - SLACK_CLIENT_ID=$SLACK_CLIENT_ID
       - SLACK_APP_TOKEN=$SLACK_APP_TOKEN
       - SLACK_APP_URL=$SLACK_APP_URL
+      - ROLLBAR_ACCESS_TOKEN=$ROLLBAR_ACCESS_TOKEN
+      - NODE_ENV=production
   mongo:
     container_name: lunchbot-db
     image: mongo

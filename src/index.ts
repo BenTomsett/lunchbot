@@ -46,6 +46,7 @@ const port = process.env.PORT || 3001;
 const server = express();
 
 if (process.env.ROLLBAR_ACCESS_TOKEN) {
+  console.log('Rollbar is enabled');
   server.use(rollbar.errorHandler());
 }
 

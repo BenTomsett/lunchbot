@@ -45,7 +45,10 @@ const port = process.env.PORT || 3001;
 
 const server = express();
 
-server.use(rollbar.errorHandler());
+if (process.env.ROLLBAR_ACCESS_TOKEN) {
+  server.use(rollbar.errorHandler());
+}
+
 server.use(express.static(path.join(__dirname, 'static')));
 server.use(bodyParser.urlencoded({ extended: false }));
 

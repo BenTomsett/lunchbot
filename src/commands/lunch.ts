@@ -7,6 +7,46 @@ import { invalidLunchParameters } from '../responses/commandResponses';
 import rollbar from '../misc/rollbar';
 import getChannelMention from '../misc/utils';
 
+export const getStatusExpiration = (text: string) => {
+  const validMinuteUnits = ['minute', 'minutes', 'min', 'mins', 'm'];
+  const validHourUnits = ['hour', 'hours', 'hr', 'hrs', 'h'];
+
+  let statusExpiration = 0;
+
+  if (text !== '') {
+    let args = text.split(' ');
+
+    if (args.length === 1) {
+      args = args[0].split(/([0-9]+)/)
+        .filter((arg) => arg !== '');
+    }
+
+    if (args.length !== 2 || Number.isNaN(args[0])) {
+      return null;
+    }
+
+    let date = new Date();
+    const length = parseInt(args[0], 10);
+    const unit = args[1];
+
+    if (length <= 0) {
+      return null;
+    }
+
+    if (validHourUnits.includes(unit)) {
+      date = addHours(date, length);
+    } else if (validMinuteUnits.includes(unit)) {
+      date = addMinutes(date, length);
+    } else {
+      return null;
+    }
+
+    statusExpiration = Math.floor(date.getTime() / 1000);
+  }
+
+  return statusExpiration;
+};
+
 const lunchCommandCallback: Middleware<SlackCommandMiddlewareArgs> = async ({
   command,
   ack,
@@ -19,43 +59,10 @@ const lunchCommandCallback: Middleware<SlackCommandMiddlewareArgs> = async ({
 
   console.log(`⬇️ ${command.user_id} (${command.user_name}) invoked /lunch`);
 
-  const validMinuteUnits = ['minute', 'minutes', 'min', 'mins', 'm'];
-  const validHourUnits = ['hour', 'hours', 'hr', 'hrs', 'h'];
+  const statusExpiration = getStatusExpiration(command.text);
 
-  let statusExpiration = 0;
-
-  if (command.text !== '') {
-    let args = command.text.split(' ');
-
-    if (args.length === 1) {
-      args = args[0].split(/([0-9]+)/)
-        .filter((arg) => arg !== '');
-    }
-
-    if (args.length !== 2) {
-      return invalidLunchParameters(respond);
-    }
-    if (Number.isNaN(args[0])) {
-      return invalidLunchParameters(respond);
-    }
-
-    let date = new Date();
-    const length = parseInt(args[0], 10);
-    const unit = args[1];
-
-    if (length <= 0) {
-      return invalidLunchParameters(respond);
-    }
-
-    if (validHourUnits.includes(unit)) {
-      date = addHours(date, length);
-    } else if (validMinuteUnits.includes(unit)) {
-      date = addMinutes(date, length);
-    } else {
-      return invalidLunchParameters(respond);
-    }
-
-    statusExpiration = Math.floor(date.getTime() / 1000);
+  if (statusExpiration === null) {
+    return invalidLunchParameters(respond);
   }
 
   return (async () => {

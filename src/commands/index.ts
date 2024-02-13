@@ -10,6 +10,7 @@ import hereCommandCallback from './here';
 import flipacoinCommandCallback from './flipacoin';
 import chooseCommandCallback from './choose';
 import changeMentionCommandCallback from './changeMention';
+import setCommandCallback from './set';
 
 const registerCommands = (app: App) => {
   console.info('Registering commands...');
@@ -23,6 +24,7 @@ const registerCommands = (app: App) => {
   app.command('/choose', getToken, inChannel, chooseCommandCallback);
 
   app.command('/change_mention', getToken, inChannel, isAdmin, changeMentionCommandCallback);
+  app.command('/set', getToken, inChannel, isAdmin, setCommandCallback);
 };
 
 export default registerCommands;

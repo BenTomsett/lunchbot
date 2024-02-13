@@ -31,8 +31,11 @@ features:
       description: Removes any away status.
       should_escape: false
     - command: /change_mention
-      description: Changes the @mention to use in responses
+      description: Changes the @mention to use in responses (admin only)
       should_escape: true
+    - command: /set
+      description: Change the lunch/away status of another user (admin only)
+      usage_hint: "<@user> <lunch [<length> {hours | minutes}] | brb>"
 oauth_config:
   scopes:
     user:

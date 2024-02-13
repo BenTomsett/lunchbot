@@ -76,7 +76,7 @@ const setCommandCallback: Middleware<SlackCommandMiddlewareArgs> = async ({
       });
   } else if (status === 'brb') {
     await say(
-      `${await getChannelMention(command.channel_id)} - <@${command.user_id}> will be right back (set by <@${command.user_id}>)`,
+      `${await getChannelMention(command.channel_id)} - <@${userId}> will be right back (set by <@${command.user_id}>)`,
     ).catch((err) => {
       rollbar.error('Unable to send response', err);
     });
@@ -92,7 +92,7 @@ const setCommandCallback: Middleware<SlackCommandMiddlewareArgs> = async ({
     });
   } else if (status === 'back') {
     await say(
-      `${await getChannelMention(command.channel_id)} - <@${command.user_id}> is back (set by <@${command.user_id}>)`,
+      `${await getChannelMention(command.channel_id)} - <@${userId}> is back (set by <@${command.user_id}>)`,
     ).catch((err) => {
       rollbar.error('Unable to send response', err);
     });

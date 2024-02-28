@@ -15,7 +15,7 @@ const flipacoinCommandCallback: Middleware<SlackCommandMiddlewareArgs> = async (
   await say(
     `It's ${coinToss}!`,
   ).catch((err) => {
-    rollbar.error('Unable to send response', err);
+    rollbar.error('Unable to send response', err, command);
   });
 };
 

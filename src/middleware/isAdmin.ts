@@ -20,7 +20,7 @@ const isAdmin: Middleware<SlackCommandMiddlewareArgs> = async ({
   });
 
   if (!admin) {
-    rollbar.error(`Admin-only command invoked by ${command.user_id} (${command.user_name}) without admin permissions in channel (${command.channel_name})`);
+    rollbar.error(`Admin-only command invoked by ${command.user_id} (${command.user_name}) without admin permissions in channel (${command.channel_name})`, command);
     return needAdminPerms(respond);
   }
 

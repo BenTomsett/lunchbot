@@ -70,7 +70,7 @@ const lunchCommandCallback: Middleware<SlackCommandMiddlewareArgs> = async ({
       `${await getChannelMention(command.channel_id)} - <@${command.user_id}> is going on lunch${statusExpiration > 0 ? `<!date^${statusExpiration}^ until {time}| >` : ''} :hamburger:`,
     )
       .catch((err) => {
-        rollbar.error('Unable to send response', err);
+        rollbar.error('Unable to send response', err, command);
       });
 
     await client.users.profile.set({
@@ -82,7 +82,7 @@ const lunchCommandCallback: Middleware<SlackCommandMiddlewareArgs> = async ({
       }),
     })
       .catch((err) => {
-        rollbar.error('Unable to update user\'s Slack status', err);
+        rollbar.error('Unable to update user\'s Slack status', err, command);
       });
   })();
 };

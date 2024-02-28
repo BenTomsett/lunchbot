@@ -24,7 +24,7 @@ const getToken: Middleware<SlackCommandMiddlewareArgs> = async ({
     context.userToken = install.user.token;
     await next();
   } else {
-    rollbar.error(`No user token found for user ${command.user_id} (${command.user_name})`);
+    rollbar.error(`No user token found for user ${command.user_id} (${command.user_name})`, command);
     await needAuthorisation(respond);
   }
 };

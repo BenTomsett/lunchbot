@@ -72,13 +72,13 @@ const setCommandCallback: Middleware<SlackCommandMiddlewareArgs> = async ({
       }),
     })
       .catch((err) => {
-        rollbar.error('Unable to update user\'s Slack status', err);
+        rollbar.error('Unable to update user\'s Slack status', err, command);
       });
   } else if (status === 'brb') {
     await say(
       `${await getChannelMention(command.channel_id)} - <@${userId}> will be right back (set by <@${command.user_id}>)`,
     ).catch((err) => {
-      rollbar.error('Unable to send response', err);
+      rollbar.error('Unable to send response', err, command);
     });
 
     await client.users.profile.set({
@@ -88,13 +88,13 @@ const setCommandCallback: Middleware<SlackCommandMiddlewareArgs> = async ({
         status_emoji: ':clock1:',
       }),
     }).catch(async (err) => {
-      rollbar.error('Unable to update user\'s Slack status', err);
+      rollbar.error('Unable to update user\'s Slack status', err, command);
     });
   } else if (status === 'back') {
     await say(
       `${await getChannelMention(command.channel_id)} - <@${userId}> is back (set by <@${command.user_id}>)`,
     ).catch((err) => {
-      rollbar.error('Unable to send response', err);
+      rollbar.error('Unable to send response', err, command);
     });
 
     await client.users.profile.set({
@@ -104,7 +104,7 @@ const setCommandCallback: Middleware<SlackCommandMiddlewareArgs> = async ({
         status_emoji: '',
       }),
     }).catch((err) => {
-      rollbar.error('Unable to update user\'s Slack status', err);
+      rollbar.error('Unable to update user\'s Slack status', err, command);
     });
   } else {
     return invalidSetParameters(respond);

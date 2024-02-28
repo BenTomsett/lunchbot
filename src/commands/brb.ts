@@ -16,7 +16,7 @@ const brbCommandCallback: Middleware<SlackCommandMiddlewareArgs> = async ({
   await say(
     `${await getChannelMention(command.channel_id)} - <@${command.user_id}> will be right back`,
   ).catch((err) => {
-    rollbar.error('Unable to send response', err);
+    rollbar.error('Unable to send response', err, command);
   });
 
   await client.users.profile.set({
@@ -26,7 +26,7 @@ const brbCommandCallback: Middleware<SlackCommandMiddlewareArgs> = async ({
       status_emoji: ':clock1:',
     }),
   }).catch(async (err) => {
-    rollbar.error('Unable to update user\'s Slack status', err);
+    rollbar.error('Unable to update user\'s Slack status', err, command);
   });
 };
 

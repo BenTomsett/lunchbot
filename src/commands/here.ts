@@ -79,7 +79,7 @@ const hereCommandCallback: Middleware<SlackCommandMiddlewareArgs> = async ({
         },
       ],
     }).catch((err) => {
-      rollbar.error('Unable to send response', err);
+      rollbar.error('Unable to send response', err, command);
     });
   }
 };

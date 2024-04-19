@@ -14,7 +14,7 @@ const backCommandCallback: Middleware<SlackCommandMiddlewareArgs> = async ({
   console.log(`⬇️ ${command.user_id} (${command.user_name}) invoked /back`);
 
   await say(
-    `${await getChannelMention(command.channel_id)} - <@${command.user_id}> is back`,
+    `${await getChannelMention(command.channel_id)} <@${command.user_id}> is back`,
   ).catch((err) => {
     rollbar.error('Unable to send response', err, command);
   });

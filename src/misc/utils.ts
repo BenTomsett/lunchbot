@@ -6,10 +6,14 @@ const getChannelMention = async (channelId: string) => {
   });
 
   if (channel && channel.mention) {
-    return channel.mention;
+    if (channel.mention === 'nobody') {
+      return '';
+    }
+
+    return `${channel.mention} -`;
   }
 
-  return '<!here>';
+  return '<!here> - ';
 };
 
 export default getChannelMention;

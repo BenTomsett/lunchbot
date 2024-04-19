@@ -57,7 +57,7 @@ const setCommandCallback: Middleware<SlackCommandMiddlewareArgs> = async ({
     }
 
     await say(
-      `${await getChannelMention(command.channel_id)} - <@${userId}> is going on lunch${statusExpiration > 0 ? `<!date^${statusExpiration}^ until {time}| >` : ''} :hamburger: (set by <@${command.user_id}>)`,
+      `${await getChannelMention(command.channel_id)} <@${userId}> is going on lunch${statusExpiration > 0 ? `<!date^${statusExpiration}^ until {time}| >` : ''} :hamburger: (set by <@${command.user_id}>)`,
     )
       .catch((err) => {
         rollbar.error('Unable to send response', err);
@@ -76,7 +76,7 @@ const setCommandCallback: Middleware<SlackCommandMiddlewareArgs> = async ({
       });
   } else if (status === 'brb') {
     await say(
-      `${await getChannelMention(command.channel_id)} - <@${userId}> will be right back (set by <@${command.user_id}>)`,
+      `${await getChannelMention(command.channel_id)} <@${userId}> will be right back (set by <@${command.user_id}>)`,
     ).catch((err) => {
       rollbar.error('Unable to send response', err, command);
     });
@@ -92,7 +92,7 @@ const setCommandCallback: Middleware<SlackCommandMiddlewareArgs> = async ({
     });
   } else if (status === 'back') {
     await say(
-      `${await getChannelMention(command.channel_id)} - <@${userId}> is back (set by <@${command.user_id}>)`,
+      `${await getChannelMention(command.channel_id)} <@${userId}> is back (set by <@${command.user_id}>)`,
     ).catch((err) => {
       rollbar.error('Unable to send response', err, command);
     });

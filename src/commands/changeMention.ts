@@ -17,8 +17,9 @@ const changeMentionCommandCallback: Middleware<SlackCommandMiddlewareArgs> = asy
   // bot/app mentions              -> <@U06JQ5XF89F|lunchbot2>
   // channel mentions              -> <#C03PN47NT09|>
   // user group mentions           -> <!subteam^S06JQ5XFA|@team-name>
+  // disable mentions              -> 'nobody'
 
-  const mentionRegex = /<(([@!#]|(!subteam\^))[A-Z0-9]+)(\|[a-z0-9@\.-]*)?>/i;
+  const mentionRegex = /<(([@!#]|(!subteam\^))[A-Z0-9]+)(\|[a-z0-9@.-]*)?>/i;
 
   if (command.text === '') {
     return invalidChangeMentionParameters(respond);
@@ -31,7 +32,7 @@ const changeMentionCommandCallback: Middleware<SlackCommandMiddlewareArgs> = asy
   }
 
   const mention = args[0];
-  if (!mentionRegex.test(mention)) {
+  if (mention !== 'nobody' && !mentionRegex.test(mention)) {
     return invalidChangeMentionParameters(respond);
   }
 

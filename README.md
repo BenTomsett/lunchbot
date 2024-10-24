@@ -43,6 +43,35 @@ Shows who's currently set as on lunch or away.
 
 **Usage:** `/here`
 
+### `/change_mention`
+**Admin only.** Change the user or group that Lunchbot mentions in its responses. Defaults to @here.
+
+**Usage:** `/change_mention <mention>`
+
+**Examples**<br/>
+`/change_mention @everyone` - Lunchbot will ping everyone
+`/change_mention @group-name` - Lunchbot will ping members of this group
+`/change_mention nobody` - Lunchbot will not ping anyone
+
+### `/set`
+**Admin only.** Sets the status of another user.
+
+**Usage:** `/set <@user> <lunch [<length {hours | minutes}] | brb>`
+
+**Examples**<br/>
+`/set @user lunch 1hr` - Sets @user on lunch for 1 hour
+`/set @user brb` - Sets a user as away
+
+### `/flipacoin`
+Flips a coin!
+
+**Usage:** `/flipacoin`
+
+### `/choose`
+Picks an item from a list at random. Items are separated by spaces, and can be users/groups
+
+**Usage:** `/choose [<item1> <item2>...]`
+
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 ## Getting Started

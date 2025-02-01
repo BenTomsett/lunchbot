@@ -1,4 +1,4 @@
-FROM node:18.20.1-alpine
+FROM node:18.20.6-alpine
 WORKDIR /usr/src/lunchbot
 
 COPY package.json ./
